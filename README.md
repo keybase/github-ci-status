@@ -44,5 +44,6 @@ Checking keybase/client:1207f99be4
 
 ### Usage
 
-Just run `ci` inside your repo.  The repo should have the `origin` remote set to GitHub.  Only works on public repos
-at the moment, but it would be easy to support private and GitHub Enterprise repos too.
+Just run `ci` inside your repo.  The repo should have the `origin` remote set
+to GitHub.  Only works on public repos at the moment, but it would be easy to
+support private and GitHub Enterprise repos too.
