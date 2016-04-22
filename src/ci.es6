@@ -28,7 +28,7 @@ const state_to_logsymbol = {
 
 // Get the current SHAsum.
 function get_sha () {
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     exec('git rev-parse HEAD', (err, stdout, stderr) => {
       if (err) {
         reject(err)
@@ -41,7 +41,7 @@ function get_sha () {
 
 // Get the GitHub repo details for the checked out path.
 function get_user_repo () {
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     exec('git config --get remote.origin.url', (err, stdout, stderr) => {
       if (err) {
         reject(err)
@@ -64,7 +64,7 @@ function get_user_repo () {
 
 // Get the CI status for the given commit
 function check_status (user, repo, sha) {
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     console.log(`Checking ${user}/${repo}:${sha.substring(0, 10)}\n`)
     github.statuses.getCombined({user, repo, sha}, (err, status) => {
       if (err) {
