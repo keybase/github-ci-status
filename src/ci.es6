@@ -15,6 +15,13 @@ const github = new GitHubApi({
   }
 })
 
+const state_to_logsymbol = {
+  'success': {symbol: 'success', color: 'green'},
+  'pending': {symbol: 'warning', color: 'yellow'},
+  'error': {symbol: 'warning', color: 'yellow'},
+  'failure': {symbol: 'error', color: 'red'}
+}
+
 // Get the current SHAsum.
 function get_sha () {
   return new Promise(function (resolve, reject) {
@@ -66,16 +73,9 @@ function check_status (user, repo, sha) {
 }
 
 function print_each_status (statuses) {
-  const state_to_logsymbol = {
-    'success': 'success',
-    'pending': 'warning',
-    'error': 'warning',
-    'failure': 'error'
-  }
-
   statuses.forEach(status => {
     if (status.state in state_to_logsymbol) {
-      const symbol = state_to_logsymbol[status.state]
+      const {symbol} = state_to_logsymbol[status.state]
       console.log(logSymbols[symbol], status.description)
     } else {
       console.error(`Unknown status received from github: ${status.state}`)
@@ -104,28 +104,30 @@ async function start () {
    * 4: the required number of tests weren't run
    */
   print_each_status(status.statuses)
+  const {symbol, color} = state_to_logsymbol[status.state]
   switch (status.state) {
     case 'error':
-      console.error(logSymbols.warning, chalk.yellow('CI tests errored'))
+      console.error(logSymbols[symbol], chalk[color]('CI tests errored'))
       process.exit(1)
       break
     case 'failure':
-      console.error(logSymbols.error, chalk.red('CI tests failed'))
+      console.error(logSymbols[symbol], chalk[color]('CI tests failed'))
       process.exit(2)
       break
     case 'pending':
-      console.error(logSymbols.warning, chalk.yellow('CI still pending'))
+      console.error(logSymbols[symbol], chalk[color]('CI still pending'))
       process.exit(3)
       break
     case 'success':
       if (status.statuses.length < 3) {
-        console.error(logSymbols.warning, chalk.yellow(
+        console.error(logSymbols[symbol], chalk[color](
           `The required number of tests weren't run (${status.statuses.length} vs 3)`
         ))
         process.exit(4)
       }
-      console.log(logSymbols.success, chalk.green('CI tests passed'))
+      console.log(logSymbols[symbol], chalk[color]('CI tests passed'))
       process.exit(0)
+      break
     default:
       console.error(`Unknown status received from github: ${status.state}`)
       process.exit(1)
