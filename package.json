@@ -22,11 +22,7 @@
     "status"
   ],
   "author": "Chris Ball <chris@printf.net> (http://printf.net/)",
-  "license": "MIT",
-  "licenses": [{
-    "type": "The MIT License",
-    "url": "http://www.opensource.org/licenses/mit-license.php"
-  }],
+  "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/keybase/github-ci-status/issues"
   },
