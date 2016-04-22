@@ -118,7 +118,6 @@ async function start () {
       process.exit(3)
       break
     case 'success':
-    default:
       if (status.statuses.length < 3) {
         console.error(logSymbols.warning, chalk.yellow(
           `The required number of tests weren't run (${status.statuses.length} vs 3)`
@@ -127,6 +126,9 @@ async function start () {
       }
       console.log(logSymbols.success, chalk.green('CI tests passed'))
       process.exit(0)
+    default:
+      console.error(`Unknown status received from github: ${status.state}`)
+      process.exit(1)
   }
 }
 
