@@ -2,12 +2,12 @@
   "name": "github-ci-status",
   "version": "1.0.0",
   "description": "Check the current CI status of a repo using GitHub's Statuses API",
-  "main": "index.js",
+  "main": "lib/ci.js",
   "bin": {
-    "ci": "./ci.js"
+    "ci": "lib/ci.js"
   },
   "scripts": {
-    "build": "babel ci.es6 -o ci.js",
+    "build": "babel src -d lib",
     "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
