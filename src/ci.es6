@@ -1,10 +1,14 @@
 #!/usr/bin/env node
 require('babel-polyfill')
 
+const args = require('minimist')(process.argv.slice(2))
 const chalk = require('chalk')
 const exec = require('child_process').exec
 const GitHubApi = require('github')
 const logSymbols = require('log-symbols')
+
+// Number of tests required to have been run for success
+const required_tests = args['required-tests'] || 1
 
 const github = new GitHubApi({
   // required
@@ -119,9 +123,10 @@ async function start () {
       process.exit(3)
       break
     case 'success':
-      if (status.statuses.length < 3) {
+      if (status.statuses.length < required_tests) {
+        let {symbol, color} = state_to_logsymbol['error']
         console.error(logSymbols[symbol], chalk[color](
-          `The required number of tests weren't run (${status.statuses.length} vs 3)`
+          `The required number of tests weren't run (${status.statuses.length} vs ${required_tests})`
         ))
         process.exit(4)
       }
