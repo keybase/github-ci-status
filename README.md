@@ -31,7 +31,7 @@ Checking keybase/client:1280c0238c
 ```
 Or this:
 ```
-λ ci
+λ ci --required-tests 3
 Checking keybase/client:1207f99be4
 
 ✔ Your tests passed on CircleCI!
@@ -41,3 +41,7 @@ Checking keybase/client:1207f99be4
 λ echo $?
 4
 ```
+
+### Usage
+
+Just run `ci` inside your repo.  The repo should have the `origin` remote set to GitHub.  Only works on public repos at the moment, but it would be easy to support private and GitHub Enterprise repos too.
